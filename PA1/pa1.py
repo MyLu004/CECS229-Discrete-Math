@@ -12,8 +12,6 @@ def equiv_to(a, m, low, high):
     return x_vals
 
 """ ---------------- PROBLEM 2 ----------------"""
-
-
 def b_rep(n, b):
     print("it went here")
     digits = [] # stores the digits of the b-representation of n
@@ -32,8 +30,6 @@ def b_rep(n, b):
     return  result
 
 """ ---------------- PROBLEM 3 ----------------"""
-
-
 def binary_add(a, b):
     # removing all whitespace from the strings
     a = a.replace(' ', '')
@@ -59,13 +55,13 @@ def binary_add(a, b):
         result = (a_i+b_i+carry) %2
         # FIXME: Update carry =
         carry = (a_i+b_i+carry) //2
-        print('my carry: ',carry)
+        # print('my carry: ',carry)
 
         # myList.append(result)
         myList += str(result)
     if carry == 1:
         # FIXME: remove
-        print('carry: ', carry)
+        # print('carry: ', carry)
         myList += str(carry)
         # myList.append(carry)
 
@@ -83,16 +79,24 @@ def binary_mul(a, b):
     partial_products = []
     i = 0  # index of the current bit of string 'a' beginning at 0, right-to-left
     for bit in reversed(a):
-        print("bit: ",bit)
+        # print("bit: ",bit)
+        # print("my i: ",i)
         if bit == '1':
-            partial_products.append("FIXME: Append the appropriate partial product")
+            # print("my_bit: ",bit)
+            my_val = b + "0"*i
+            partial_products.append(my_val)
         i += 1
 
+    # print("my partial product: ",partial_products)
+    # print("my len partial product: ",len(partial_products))
     result = '0'
+
+    #adding number
     while len(partial_products) > 0:
-        # result = binary_add("FIXME: Input the correct arguments")
+        result = binary_add(result,partial_products[0])
+        print("my result: ",result)
         del partial_products[0]
-    return  # FIXME: Return the appropriate result
+    return  result
 
 if __name__ == "__main__":
     a = "1011"

@@ -1,2 +1,6 @@
 val1 = "12345"
-print(val1[::-1])
+
+i=5
+val1 += "0" *i
+
+print(val1)
