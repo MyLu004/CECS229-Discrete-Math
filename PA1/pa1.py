@@ -1,9 +1,7 @@
 """ ---------------- PROBLEM 1 ----------------"""
-
-
 def equiv_to(a, m, low, high):
-    k_low = int((low - a)/m)
-    k_high = int((high - a)/m)
+    k_low = (low - a)//m
+    k_high = (high - a)//m
     k_vals = list(range(k_low, k_high + 1))
     x_vals = []
     for i in k_vals:
@@ -21,12 +19,15 @@ def b_rep(n, b):
         digit = q - ((q // b)*b)
         if b == 16 and digit > 9:
             hex_dict = {10: 'A', 11 : 'B', 12: 'C', 13: 'D', 14: 'E', 15 : 'F'}
+            if digit in hex_dict:
+                digit = hex_dict[digit]
 
         digits.append(digit)
         q = q // b
         k += 1
     myStr = map(str, digits[::-1])
     result = ''.join(myStr)
+    # print("my result: ",result)
     return  result
 
 """ ---------------- PROBLEM 3 ----------------"""
@@ -50,10 +51,7 @@ def binary_add(a, b):
     for i in reversed(range(len(a))):
         a_i = int(a[i])
         b_i = int(b[i])
-
-        # FIXME: Update result += ....
         result = (a_i+b_i+carry) %2
-        # FIXME: Update carry =
         carry = (a_i+b_i+carry) //2
         # print('my carry: ',carry)
 
@@ -86,7 +84,6 @@ def binary_mul(a, b):
             my_val = b + "0"*i
             partial_products.append(my_val)
         i += 1
-
     # print("my partial product: ",partial_products)
     # print("my len partial product: ",len(partial_products))
     result = '0'
@@ -98,8 +95,8 @@ def binary_mul(a, b):
         del partial_products[0]
     return  result
 
-if __name__ == "__main__":
-    a = "1011"
-    b = "11"
 
-    print(binary_mul(a,b))
+# if __name__ == "__main__":
+#     va1 = 491
+#     base  = 16
+#     b_rep(va1,base)

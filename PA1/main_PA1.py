@@ -4,16 +4,20 @@ from pa1 import equiv_to
 from pa1 import b_rep
 from pa1 import binary_add
 from pa1 import binary_mul
-import testingPA1
+# import testingPA1
 
 
 def main():
   print("Welcome to the PA #1 Tester")
-
   while True:
     user_in = input(
       "\n" + "-" * 50 +
-      "\nWhich problem would you like to test?\n1.  Problem 1: equiv_to(a, m, low, high)\n2.  Problem 2: b_rep(n, b)\n3.  Problem 3: binary_add(a, b)\n4.  Problem 4: binary_mul(a, b)\n5.  Run your own tester.\nQ.  Quit\n\nEnter your selection: "
+      "\nWhich problem would you like to test?\n"
+      "1.  Problem 1: equiv_to(a, m, low, high)\n"
+      "2.  Problem 2: b_rep(n, b)\n"
+      "3.  Problem 3: binary_add(a, b)\n"
+      "4.  Problem 4: binary_mul(a, b)\n5.  Run your own tester.\n"
+      "Q.  Quit\n\nEnter your selection: "
     )
     # user_in = '2'
     if user_in == '1':
@@ -22,12 +26,6 @@ def main():
       m = random.randint(4, 15)
       low = random.randint(-30, 30)
       high = random.randint(low + 10, low + 20)
-
-      #TESTING
-      # a = 3
-      # m = 5
-      # low = -10
-      # high = 15
 
       x_vals = equiv_to(a, m, low, high)
       print(
@@ -57,7 +55,7 @@ def main():
       print("\n" + "-" * 50 + "\n\nTesting Problem 2...\n\n")
       a = random.randint(10, 50)
       # a = 10
-      print(f"Hi!!!Decimal integer: {a}")
+      print(f"Decimal integer: {a}")
       expected2 = bin(a)[2:]
       returned2 = b_rep(a, 2)
 
@@ -124,7 +122,7 @@ def main():
       else:
         print("Test failed.")
     elif user_in == '5':
-      testingPA1.student_main()
+      pass
     elif user_in.upper() == 'Q':
       print("Goodbye!")
       break
