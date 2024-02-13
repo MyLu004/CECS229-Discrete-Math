@@ -80,13 +80,12 @@ def binary_mul(a, b):
         # print("bit: ",bit)
         # print("my i: ",i)
         if bit == '1':
-            print("my_bit: ",bit)
-            print("my i: ",i)
+            # print("my_bit: ",bit)
             my_val = b + "0"*i
             partial_products.append(my_val)
         i += 1
-    print("my partial product:",partial_products)
-    print("my len partial product: ",len(partial_products))
+    # print("my partial product: ",partial_products)
+    # print("my len partial product: ",len(partial_products))
     result = '0'
 
     #adding number
@@ -96,17 +95,8 @@ def binary_mul(a, b):
         del partial_products[0]
     return  result
 
-def binaryProduct(a,b):
-    c = []
-    s = 0
-    for i in reversed(b):
-        if i == "1":
-            value = a + "0"*s
-            c.append(value)
-        s += 1;
-    print("my partial product: ",c)
 
-if __name__ == "__main__":
-    a = "1000111"
-    b = "1110111"
-    binaryProduct(a,b)
+# if __name__ == "__main__":
+#     va1 = 491
+#     base  = 16
+#     b_rep(va1,base)

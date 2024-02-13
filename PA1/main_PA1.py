@@ -16,7 +16,8 @@ def main():
       "1.  Problem 1: equiv_to(a, m, low, high)\n"
       "2.  Problem 2: b_rep(n, b)\n"
       "3.  Problem 3: binary_add(a, b)\n"
-      "4.  Problem 4: binary_mul(a, b)\n5.  Run your own tester.\n"
+      "4.  Problem 4: binary_mul(a, b)\n"
+      "5.Run your own tester.\n"
       "Q.  Quit\n\nEnter your selection: "
     )
     # user_in = '2'
