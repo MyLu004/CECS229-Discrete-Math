@@ -31,6 +31,7 @@ def primes(a, b):
     #       k * x, where k is an integer; hence the comprehension
     #       should loop over values that satisfy k * x <= b
     print("my x: ",x)
+    #b // x : calculate the largest integer value of k such that k * x <= b
     multiples_x = set([value*x for value in range(1, (b//x)+1) if (value*x<=b)])
 
     P -= multiples_x  # removing the multiples of x from the set P
