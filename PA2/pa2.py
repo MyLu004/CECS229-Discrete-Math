@@ -1,3 +1,4 @@
+import math
 """ ----------------- PROBLEM 1 ----------------- """
 def primes(a, b):
   """
@@ -15,11 +16,12 @@ def primes(a, b):
 
   # FIXME: initialize `stop` which is the stopping criteria for
   #        the loop in the Sieve of Eratosthenes
-  stop = "FIXME: Replace this string"
+  stop =  math.floor(math.sqrt(int(b)))
+  print("my stop")
 
   # FIXME: initialize a Python set called `P` that contains
   #        all integers in the range [a, b]
-  P = set("FIXME: Replace this string")
+  P = set(range(a,b+1))
 
   for x in range(2, stop):
 
@@ -28,7 +30,8 @@ def primes(a, b):
     # HINT: the set of multiples of x can be expressed as
     #       k * x, where k is an integer; hence the comprehension
     #       should loop over values that satisfy k * x <= b
-    multiples_x = set("FIXME: replace this string")
+    print("my x: ",x)
+    multiples_x = set([value*x for value in range(1, (b//x)+1) if (value*x<=b)])
 
     P -= multiples_x  # removing the multiples of x from the set P
 

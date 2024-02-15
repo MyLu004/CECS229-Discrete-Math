@@ -134,7 +134,7 @@ def main():
 
         elif user_in == '6':
             print("\n" + "-" * 50 + "\n\nRunning your own tester...\n\n")
-            your_tester.test()
+            # your_tester.test()
 
         elif user_in.upper() == 'Q':
             break
