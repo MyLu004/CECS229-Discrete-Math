@@ -16,8 +16,11 @@ def primes(a, b):
 
   # FIXME: initialize `stop` which is the stopping criteria for
   #        the loop in the Sieve of Eratosthenes
-  stop =  math.floor(math.sqrt(int(b)))
-  print("my stop")
+  # stop =  math.floor(math.sqrt(int(b)))
+  print("just change ")
+  stop = math.isqrt(b)+1
+  print("please print something")
+  print("my stop: ",stop)
 
   # FIXME: initialize a Python set called `P` that contains
   #        all integers in the range [a, b]
