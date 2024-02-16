@@ -1,52 +1,52 @@
-import math
-
-def primes(a, b):
+def bezout_coeffs(a, b):
   """
-      prints all primes in the range [a, b]
-      :@param a: int type; a positive integer greater than 1
-      :@param b: int type; a positive integer greater than or equal to a.
-      :@return: set type; a set of all primes in the range [a, b]
-      :@raises ValueError if a < 1 or b < a
+      computes the Bezout coefficients of two given positive integers
+      :param a: int type; positive integer
+      :param b: int type; positive integer
+      :returns: dict type; a dictionary with parameters a and b as keys,
+                and their corresponding Bezout coefficients as values.
+      :raises: ValueError if a < 0 or b < 0
       """
-  if a < 1 or b < a:  # handling invalid range
-    raise ValueError("Invalid range given")
+  if a < 0 or b < 0:
+    raise ValueError(
+      f"bezout_coeffs(a, b) does not support negative arguments.")
+  s0 = 1
+  t0 = 0
+  s1 = -1 * (b // a)
+  t1 = 1
 
-  if a == 1:  # handling starting point a = 1
-    a = 2  # this ensures 1 is not listed as a prime
+  temp = b #21
+  bk = a #13
+  ak = temp % a #8 -> remainder
 
-  #FIXME: initialize `stop` which is the stopping criteria for
-  #        the loop in the Sieve of Eratosthenes
-#   myRange = int(b) - int(a)
- 
-    
-  stop = math.floor(math.sqrt(int(b)))
+  print(f"s1: {s1} | t1: {t1} | temp: {temp} | bk: {bk} | ak: {ak}")
+  i = 0
+  while ak != 0:
+    temp_s = s1 #s_k-1
+    temp_t = t1 #t_k-1
 
-  print("my stop point: ",stop)
+    # FIXME: Update s1 according to the formula for sk
+    s1 = s0-s1*(bk // ak) #s_k-2
 
+    # FIXME: Update t1 according to the formula for tk
+    t1 = t0-t1*(bk//ak)
 
-  # FIXME: initialize a Python set called `P` that contains
-  #        all integers in the range [a, b]
-  P = set(range(a,b+1))
-  print("my P: ",P)
+    s0 = temp_s
+    t0 = temp_t
+    temp = bk
 
-  for x in range(2, stop):
+    # FIXME: Update bk and ak
+    bk = ak
+    ak = temp % bk
 
-    # FIXME: use Python list comprehension to create a set
-    #        of multiples of x in the range [2, b];
+    print(f"{i} -> ak: {ak} | bk: {bk}")
+    i += 1
 
-    # HINT: the set of multiples of x can be expressed as
-    #       k * x, where k is an integer; hence the comprehension
-    #       should loop over values that satisfy k * x <= b
-    print("my x: ",x)
-    #b // x : calculate the largest integer value of k such that k * x <= b
-    multiples_x = set([value*x for value in range(1, (b//x)+1) if (value*x<=b)])
-    print("multiples x: ",multiples_x)
-    P -= multiples_x  # removing the multiples of x from the set P
-
-  return P
+  # FIXME: Replace each string with the correct coefficients of a and b
+  return {a: s0, b: t0}
 
 if __name__ == "__main__":
-  val1 = 22
-  val2 = 68
-  print("expected: {67, 37, 41, 43, 47, 61, 53, 23, 59, 29, 31} ")
-  print("received: ",primes(val1,val2))
+  val_a = 3
+  val_b = 28
+  print(pr(val_a,val_b))
+  print("expected: 414: 8, 662 : 5")

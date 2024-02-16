@@ -16,11 +16,11 @@ def primes(a, b):
 
   # FIXME: initialize `stop` which is the stopping criteria for
   #        the loop in the Sieve of Eratosthenes
-  # stop =  math.floor(math.sqrt(int(b)))
-  print("just change ")
-  stop = math.isqrt(b)+1
-  print("please print something")
-  print("my stop: ",stop)
+  stop =  int(math.sqrt(b))+1
+  # print("just change ")
+  # stop = math.isqrt(b)+1
+  # print("please print something")
+  # print("my stop: ",stop)
 
   # FIXME: initialize a Python set called `P` that contains
   #        all integers in the range [a, b]
@@ -35,12 +35,11 @@ def primes(a, b):
     #       should loop over values that satisfy k * x <= b
     print("my x: ",x)
     #b // x : calculate the largest integer value of k such that k * x <= b
-    multiples_x = set([value*x for value in range(1, (b//x)+1) if (value*x<=b)])
-
+    multiples_x = set([value*x for value in range(2, (b//x)+1) if (value*x<=b)])
+    print("my multiple set: ", multiples_x)
     P -= multiples_x  # removing the multiples of x from the set P
 
   return P
-
 
 """ ----------------- PROBLEM 2 ----------------- """
 
@@ -62,30 +61,35 @@ def bezout_coeffs(a, b):
   s1 = -1 * (b // a)
   t1 = 1
 
-  temp = b
-  bk = a
-  ak = temp % a
+  temp = b #21
+  bk = a #13
+  ak = temp % a #8 -> remainder
 
+  print(f"s1: {s1} | t1: {t1} | temp: {temp} | bk: {bk} | ak: {ak}")
+  i = 0
   while ak != 0:
-    temp_s = s1
-    temp_t = t1
+    temp_s = s1 #s_k-1
+    temp_t = t1 #t_k-1
 
     # FIXME: Update s1 according to the formula for sk
-    s1 = "FIXME: Replace this string"
+    s1 = s0-s1*(bk // ak) #s_k-2
 
     # FIXME: Update t1 according to the formula for tk
-    t1 = "FIXME: Replace this string"
+    t1 = t0-t1*(bk//ak)
 
     s0 = temp_s
     t0 = temp_t
     temp = bk
 
     # FIXME: Update bk and ak
-    bk = "FIXME: Replace this string"
-    ak = "FIXME: Replace this string"
+    bk = ak
+    ak = temp % bk
+
+    print(f"{i} -> ak: {ak} | bk: {bk}")
+    i += 1
 
   # FIXME: Replace each string with the correct coefficients of a and b
-  return {a: "FIXME: replace this string", b: "FIXME: replace this string"}
+  return {a: s0, b: t0}
 
 
 """ ----------------- PROBLEM 3 ----------------- """
@@ -101,9 +105,10 @@ def gcd(a, b):
   A = abs(a)
   B = abs(b)
   if A == B:
-    pass  # FIXME: replace this pass with the correct return value
+    return A
   bez = bezout_coeffs(A, B)
-  return  # FIXME: replace this pass with the correct return value
+
+  return  ((A*bez[A])+(B*bez[B]))
 
 
 """ ----------------- PROBLEM 4 ----------------- """
@@ -168,3 +173,23 @@ def solve_mod_equiv(a, b, m, low, high):
 
   x = """FIXME: replace this string with the Python list comprehension that uses x = mk + a_inv * b to generate all solutions to ax ~ b (mod m) in the range [low, high]"""
   return set(x)
+
+if __name__ == "__main__":
+  val1 = 414
+  val2 = 662
+
+  my_value = bezout_coeffs(val1,val2)
+  print("ANSWER: ", my_value)
+
+  print("value of key1 [414]: ",my_value[val1])
+  print("value of key1 [662]: ", my_value[val2])
+  value1 = val1*bezout_coeffs(val1,val2)[val1]
+  value2 = val2*bezout_coeffs(val1,val2)[val2]
+
+  print("expected GCD: 2")
+  print(value2+value1) #value
+
+  print("my GCD: ",((val1*bezout_coeffs(val1,val2)[val1])+(val2*bezout_coeffs(val1,val2)[val2])))
+
+  # my_val = bezout_coeffs(val1,val2)
+  # print("value: ",bezout_coeffs(val1,val2)[val1])

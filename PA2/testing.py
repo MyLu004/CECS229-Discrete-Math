@@ -1,3 +1,5 @@
+import math
+
 a = 58
 b = 73
 
@@ -18,3 +20,6 @@ myPrimt = 2
 myPrimeSet = set([myPrimt*value for value in range(a,b) if (myPrimt*value <= b)])
 
 print("my Prime Set: ",myPrimeSet)
+
+
+print("my mod: ", 7%3)
