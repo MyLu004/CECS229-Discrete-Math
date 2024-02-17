@@ -17,9 +17,10 @@ def primes(a, b):
   # FIXME: initialize `stop` which is the stopping criteria for
   #        the loop in the Sieve of Eratosthenes
   stop =  int(math.sqrt(b))+1
+  # print("just change ")
   # stop = math.isqrt(b)+1
   # print("please print something")
-  print("my stop: ",stop)
+  # print("my stop: ",stop)
 
   # FIXME: initialize a Python set called `P` that contains
   #        all integers in the range [a, b]
@@ -32,10 +33,10 @@ def primes(a, b):
     # HINT: the set of multiples of x can be expressed as
     #       k * x, where k is an integer; hence the comprehension
     #       should loop over values that satisfy k * x <= b
-    # print("my x: ",x)
+    print("my x: ",x)
     #b // x : calculate the largest integer value of k such that k * x <= b
     multiples_x = set([value*x for value in range(2, (b//x)+1) if (value*x<=b)])
-    # print("my multiple set: ", multiples_x)
+    print("my multiple set: ", multiples_x)
     P -= multiples_x  # removing the multiples of x from the set P
 
   return P
@@ -80,16 +81,12 @@ def bezout_coeffs(a, b):
     t0 = temp_t
     temp = bk
 
-    print(f"bk: {bk} | ak: {ak}")
     # FIXME: Update bk and ak
     bk = ak
     ak = temp % bk
 
     #print(f"{i} -> ak: {ak} | bk: {bk}")
     i += 1
-
-
-    # print(f"{bk} {s0},{t0}")
 
   # FIXME: Replace each string with the correct coefficients of a and b
   return {a: s0, b: t0}
@@ -188,8 +185,12 @@ def solve_mod_equiv(a, b, m, low, high):
   return set(x)
 
 if __name__ == "__main__":
-  val1 = 367
-  val2 = 500
+  val1 = 3
+  val2 = 11
 
-  print(gcd(val1,val2))
+  print(f"a: {val1} | m: {val2}")
+  print(mod_inv(val1,val2))
+
+  print("================================")
+  print(solve_mod_equiv(3, 4, 7, -5, 5))
 

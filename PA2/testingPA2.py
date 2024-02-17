@@ -48,5 +48,5 @@ def bezout_coeffs(a, b):
 if __name__ == "__main__":
   val_a = 3
   val_b = 28
-  print(pr(val_a,val_b))
+  print((val_a,val_b))
   print("expected: 414: 8, 662 : 5")
