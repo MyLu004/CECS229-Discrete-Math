@@ -60,20 +60,25 @@ def bezout_coeffs(a, b):
   s1 = -1 * (b // a)
   t1 = 1
 
+
+#store initial values of a and b for later use
   temp = b #21
   bk = a #13
   ak = temp % a #8 -> remainder
 
   #(f"s1: {s1} | t1: {t1} | temp: {temp} | bk: {bk} | ak: {ak}")
   i = 0
+
+  #Loop untils ak becomes zero (Euclidean algorithms)
   while ak != 0:
+    #store the previous values of sk and tk
     temp_s = s1 #s_k-1
     temp_t = t1 #t_k-1
 
-    # FIXME: Update s1 according to the formula for sk
+    # Update s1 according to the formula for sk
     s1 = s0-s1*(bk // ak) #s_k-2
 
-    # FIXME: Update t1 according to the formula for tk
+    # Update t1 according to the formula for tk
     t1 = t0-t1*(bk//ak)
 
     s0 = temp_s
@@ -81,7 +86,7 @@ def bezout_coeffs(a, b):
     temp = bk
 
     print(f"bk: {bk} | ak: {ak}")
-    # FIXME: Update bk and ak
+    # Update bk and ak for the next iteration
     bk = ak
     ak = temp % bk
 
@@ -91,13 +96,11 @@ def bezout_coeffs(a, b):
 
     # print(f"{bk} {s0},{t0}")
 
-  # FIXME: Replace each string with the correct coefficients of a and b
+  #
   return {a: s0, b: t0}
 
 
 """ ----------------- PROBLEM 3 ----------------- """
-
-
 def gcd(a, b):
   """
     computes the greatest common divisor of two given integers
@@ -112,7 +115,6 @@ def gcd(a, b):
   bez = bezout_coeffs(A, B)
 
   return  ((A*bez[A])+(B*bez[B]))
-
 
 """ ----------------- PROBLEM 4 ----------------- """
 
@@ -157,8 +159,7 @@ def solve_mod_equiv(a, b, m, low, high):
     computes all solutions to the equivalence ax ≡ b (mod m)
     that are in the range [low, high]
     :param a: int type; the coefficient of the unknown value x
-    :param b: int type; the integer that ax is equivalent to
-              under modulo m
+    :param b: int type; the integer that ax is equivalent to under modulo m
     :param m: int type; the modulo
     :param low: int type; the lower bound for the solutions
     :param high: int type; the upper bound for the solutions
@@ -172,11 +173,11 @@ def solve_mod_equiv(a, b, m, low, high):
     raise ValueError(
       f"solve_mod_equiv() does not support negative modulo m = {m}")
   a_inv = mod_inv(a, m) #a_inverse
-  print("a_inv: ",a_inv)
+  # print("a_inv: ",a_inv)
 
   k_low = (low-a_inv *b)//m
   print("my k low: ",k_low)
-  #"FIXME: replace this string with the correct lower bound for k, if x = mk + a_inv * b is a solution in the range [low, high]"""
+  #replace this string with the correct lower bound for k, if x = mk + a_inv * b is a solution in the range [low, high]
 
   k_high = (high-a_inv *b)//m
   print("my k high: ",k_high)
@@ -184,12 +185,12 @@ def solve_mod_equiv(a, b, m, low, high):
 
   x = [m*value + a_inv*b for value in range(k_low,k_high+1) if low<=(m*value + a_inv*b) <= high]
   print("my set: ",x)
-  #"""FIXME: replace this string with the Python list comprehension that uses x = mk + a_inv * b to generate all solutions to ax ~ b (mod m) in the range [low, high]"""
+  #replace this string with the Python list comprehension that uses x = mk + a_inv * b to generate all solutions to ax ~ b (mod m) in the range [low, high]
   return set(x)
 
 if __name__ == "__main__":
-  val1 = 367
-  val2 = 500
+  val1 = 111
+  val2 = 201
 
-  print(gcd(val1,val2))
+  print(bezout_coeffs(val1,val2))
 
