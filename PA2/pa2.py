@@ -67,7 +67,7 @@ def bezout_coeffs(a, b):
   ak = temp % a #8 -> remainder
 
   #(f"s1: {s1} | t1: {t1} | temp: {temp} | bk: {bk} | ak: {ak}")
-  i = 0
+
 
   #Loop untils ak becomes zero (Euclidean algorithms)
   while ak != 0:
@@ -85,18 +85,14 @@ def bezout_coeffs(a, b):
     t0 = temp_t
     temp = bk
 
-    print(f"bk: {bk} | ak: {ak}")
+    #print(f"bk: {bk} | ak: {ak}")
+
     # Update bk and ak for the next iteration
     bk = ak
-    ak = temp % bk
-
-    #print(f"{i} -> ak: {ak} | bk: {bk}")
-    i += 1
-
+    #ak = temp % bk
+    ak = temp % ak
 
     # print(f"{bk} {s0},{t0}")
-
-  #
   return {a: s0, b: t0}
 
 
@@ -185,7 +181,8 @@ def solve_mod_equiv(a, b, m, low, high):
 
   x = [m*value + a_inv*b for value in range(k_low,k_high+1) if low<=(m*value + a_inv*b) <= high]
   print("my set: ",x)
-  #replace this string with the Python list comprehension that uses x = mk + a_inv * b to generate all solutions to ax ~ b (mod m) in the range [low, high]
+  #replace this string with the Python list comprehension that uses x = mk + a_inv * b to generate all s
+  # olutions to ax ~ b (mod m) in the range [low, high]
   return set(x)
 
 if __name__ == "__main__":
