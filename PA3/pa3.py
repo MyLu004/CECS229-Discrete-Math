@@ -59,9 +59,30 @@ def affine_decrypt(ciphertext, a, b):
   else:
     #find a_inv using Euclidean Algorithm
     # TODO: short way [not work on codepose]
-    a_inv = pow(a,-1,26)
+    print("my gcd: ", math.gcd(a,26))
+    #a_inv = pow(a,-1,26)
     # TODO: Long way | use Euclidean Algorithms
-    #ARGGG
+    s0,t0 = 1,0
+    s1,t1 = -1*(26//a),1
+
+    temp = 26
+    bk = a
+    ak = temp % a
+    while ak!=0:
+      temp_s = s1
+      temp_t = t1
+
+      s1 = s0-s1*(bk//ak)
+      t1 = t0-t1*(bk//ak)
+
+      s0 = temp_s
+      t0 = temp_t
+      temp = bk
+
+      bk = ak
+      ak = temp %ak
+      #ARGGG
+    a_inv = s0
 
     print("my a_inv: ",a_inv)
   text = ""
@@ -193,4 +214,4 @@ if __name__ == "__main__":
   a = 21
   b = 11
   #affine_encrypt("k",a,b)
-  print(affine_decrypt("Z",a,b))
+  print(affine_decrypt("ZUTOOTIIPUXTY",a,b))
