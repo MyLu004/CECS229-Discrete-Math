@@ -58,10 +58,10 @@ def affine_decrypt(ciphertext, a, b):
     raise ValueError
   else:
     #find a_inv using Euclidean Algorithm
-    # TODO: short way [not work on codepose]
+    # DONE: short way [not work on codepose]
     print("my gcd: ", math.gcd(a,26))
     #a_inv = pow(a,-1,26)
-    # TODO: Long way | use Euclidean Algorithms
+    # DONE: Long way | use Euclidean Algorithms
     s0,t0 = 1,0
     s1,t1 = -1*(26//a),1
 
@@ -112,11 +112,7 @@ def affine_decrypt(ciphertext, a, b):
 
       #print("my text-after: ",text)
   return text
-
-
 """ ----------------- PROBLEM 3 ----------------- """
-
-
 def encryptRSA(plaintext, n, e):
   """
     encrypts plaintext using RSA and the key (n, e)
@@ -127,43 +123,68 @@ def encryptRSA(plaintext, n, e):
     """
 
   text = plaintext.replace(' ', '')  # removing whitespace
-
-  # FIXME: Use util.py to initialize 'digits' as a string of
+  digits = ''
+  # if len(plaintext) %2 != 0:
+  #   text += "X"
+  # DONE: Use util.py to initialize 'digits' as a string of
   # the two-digit integers that correspond to the letters of 'text'
-  digits = 'None'
+  for letter in text:
+    letter_to_digit = util.letters2digits(letter)
+    digits += letter_to_digit
 
-  # FIXME: Use util.py to initialize 'l' with the length of each RSA block
-  l = 0
+  #print("my digits: ",digits)
 
-  # FIXME: Use a loop to pad 'digits' with enough 23's (i.e. X's)
+  #print("digit len: ", len(str(digits)))
+
+
+  # DONE: Use util.py to initialize 'l' with the length of each RSA block
+  l = len(str(n))
+  #print((len(str(digits)))/l)
+
+
+  # DONE: Use a loop to pad 'digits' with enough 23's (i.e. X's)
   # so that it can be broken up into blocks of length l
+  if len(str(digits))% l != 0:
+    digits = str(digits) + "23"
+    #print("my str digits: ", digits)
 
   # creating a list of RSA blocks
   blocks = [digits[i:i + l] for i in range(0, len(digits), l)]
+  print("my block", blocks)
 
   cipher = ""
   for b in blocks:
-    # FIXME: Initialize 'encrypted_block' so that it contains
+    # DONE: Initialize 'encrypted_block' so that it contains
     # the encryption of block 'b' as a string
-    encrypted_block = 'None'
+    #mod_val = int(b)**int(e)
+    #pow_val = int(b)**int(e)
+    # mod = pow_val%int(n)
 
-    if len(encrypted_block) < l:
-      # FIXME: If the encrypted block contains less digits
+    encrypted_block  = (int(b)**int(e))%int(n)
+    # print("pow: ",mod_val)
+    # print("mod: ",mod_val%int(n))
+    # print("Result: ",mod_val-(int(n))*mod_val)
+    #print("value: ",value)
+    #encrypted_block = math.fmod(int(b)**int(e),int(n))
+    #print("encryted_block: ",encrypted_block)
+
+    if len(str(encrypted_block)) < l:
+      # DONE: If the encrypted block contains less digits
       # than the block size l, prepend the block with enough
       # 0's so that the numeric value of the block
       # remains the same, but the new block size is l,
       # e.g. if l = 4 and encrypted block is '451' then prepend
       # one 0 to obtain '0451'
-      encrypted_block = None
+      encrypted_block = str(encrypted_block).zfill(l)
 
-    # FIXME: Append the encrypted block to the cipher
-    cipher += 'None'
+
+
+    # DONE: Append the encrypted block to the cipher
+    cipher += str(encrypted_block)
   return cipher
 
 
 """ ----------------- PROBLEM 4 ----------------- """
-
-
 def decryptRSA(cipher, p, q, e):
   """
     decrypts the cipher, which was encrypted using RSA and the key (p * q, e)
@@ -211,7 +232,14 @@ def decryptRSA(cipher, p, q, e):
   return text
 
 if __name__ == "__main__":
-  a = 21
-  b = 11
-  #affine_encrypt("k",a,b)
-  print(affine_decrypt("ZUTOOTIIPUXTY",a,b))
+  # a = 21
+  # b = 11
+  # #affine_encrypt("k",a,b)
+  # print(affine_decrypt("ZUTOOTIIPUXTY",a,b))
+  text = 'STOPS'
+  expect = '208121821346'
+  n = 2537
+  e = 13
+  cipher = encryptRSA(text,n,e)
+  print('result: ',cipher)
+  print('expect: ',expect)
