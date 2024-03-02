@@ -138,9 +138,8 @@ def encryptRSA(plaintext, n, e):
 
 
   # DONE: Use util.py to initialize 'l' with the length of each RSA block
-  l = len(str(n))
+  l = util.blocksize(n)
   #print((len(str(digits)))/l)
-
 
   # DONE: Use a loop to pad 'digits' with enough 23's (i.e. X's)
   # so that it can be broken up into blocks of length l
@@ -195,39 +194,91 @@ def decryptRSA(cipher, p, q, e):
     """
 
   n = p * q
+
   ciphertext = cipher.replace(' ', '')
 
-  # FIXME: Use util.py to initialize `l` with the size of
+  # DONE: Use util.py to initialize `l` with the size of
   # each RSA block
-  l = 0
-
-  # FIXME: Use a Python list comprehension to break the ciphertext
+  l = util.blocksize(n)
+  print("my l: ",l)
+  #print("my n:", n)
+  # DONE: Use a Python list comprehension to break the ciphertext
   # into blocks of equal length 'l'. Initialize 'blocks' so that it
   # contains these blocks as elements
-  blocks = []
+  #print("my cipher: ", ciphertext)
+  blocks = [ciphertext[value:value+l] for value in range(0,len(ciphertext),l)]
+  print("list block: ",blocks)
+  # for i in range(len(ciphertext)):
+  #   blocks += str(ciphertext[i])
+  #print("my block: ",blocks)
+  print("my e: ",e)
 
   text = ""  # initializing the variable that will hold the decrypted text
 
-  # FIXME: Compute the inverse of e
-  e_inv = None
+  # DONE: Compute the inverse of e
+  mod_val = (p-1)*(q-1)
+
+  #e_inv = None
+
+  s0, t0 = 1, 0
+  s1, t1 = -1 * (mod_val // e), 1
+
+  temp = mod_val
+  bk = e
+  ak = temp % e
+  while ak != 0:
+    temp_s = s1
+    temp_t = t1
+
+    s1 = s0 - s1 * (bk // ak)
+    t1 = t0 - t1 * (bk // ak)
+
+    s0 = temp_s
+    t0 = temp_t
+    temp = bk
+
+    bk = ak
+    ak = temp % ak
+    # ARGGG
+  while s0 < 0:
+    s0 += mod_val
+  e_inv = s0
+
+  print("my mod: ",mod_val)
+  print("e_inv: ",e_inv)
+  # print("my n: ",n)
+  # print(blocks[0])
+  # pow = int(blocks[0])**e_inv
+  # print("my pow: ",pow)
+  # result = pow%int(n)
+  # result = str(result).zfill(4)
+  # print("my block0: ",result)
+  # result = util.digits2letters(str(result))
+  # print("my block1: ",result)
 
   for b in blocks:
-    # FIXME: Use the RSA decryption function to decrypt
+    # DONE: Use the RSA decryption function to decrypt
     # the current block
-    decrypted_block = 'None'
+    #print("block1: ",(int(b)**e_inv)%int(n))
+    pow_val = int(b)**e_inv
+    decrypted_block = pow_val%n
 
-    if len(decrypted_block) < l:
-      # FIXME: If the decrypted block contains less digits
+    if len(str(decrypted_block)) < l:
+      # DONE: If the decrypted block contains less digits
       # than the block size l, prepend the block with
       # enough 0's so that the numeric value of the block
       # remains the same, but the new block size is l,
       # e.g. if l = 4 and decrypted block is '19' then prepend
       # two 0's to obtain '0019'
-      decrypted_block = None
+      decrypted_block = str(decrypted_block).zfill(l)
+      print("fill: ", decrypted_block)
 
-    # FIXME: Use util.py to append to text the decrypted block
+    # DONE: Use util.py to append to text the decrypted block
     # transformed into letters
-    text += 'None'
+    decrypted_block = util.digits2letters(str(decrypted_block))
+    #print("Decrypted_block: ", decrypted_block)
+    print("result1: ", decrypted_block)
+    text += decrypted_block
 
   return text
 
@@ -236,10 +287,12 @@ if __name__ == "__main__":
   # b = 11
   # #affine_encrypt("k",a,b)
   # print(affine_decrypt("ZUTOOTIIPUXTY",a,b))
-  text = 'STOPS'
-  expect = '208121821346'
-  n = 2537
-  e = 13
-  cipher = encryptRSA(text,n,e)
-  print('result: ',cipher)
+  text = '37472822'
+  expect = 'STOP'
+
+  p = 43
+  q = 97
+  e = 11
+  cipher = decryptRSA(text,p,q,e)
+  print('result3: ',cipher)
   print('expect: ',expect)
