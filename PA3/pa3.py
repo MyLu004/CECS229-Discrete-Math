@@ -124,59 +124,32 @@ def encryptRSA(plaintext, n, e):
 
   text = plaintext.replace(' ', '')  # removing whitespace
   digits = ''
-  # if len(plaintext) %2 != 0:
-  #   text += "X"
-  # DONE: Use util.py to initialize 'digits' as a string of
-  # the two-digit integers that correspond to the letters of 'text'
+  
   for letter in text:
     letter_to_digit = util.letters2digits(letter)
     digits += letter_to_digit
 
-  #print("my digits: ",digits)
-
-  #print("digit len: ", len(str(digits)))
-
-
-  # DONE: Use util.py to initialize 'l' with the length of each RSA block
+  # Use util.py to initialize 'l' with the length of each RSA block
   l = util.blocksize(n)
   #print((len(str(digits)))/l)
 
-  # DONE: Use a loop to pad 'digits' with enough 23's (i.e. X's)
-  # so that it can be broken up into blocks of length l
+  #Use a loop to pad 'digits' with enough 23's (i.e. X's)
+  
   if len(str(digits))% l != 0:
     digits = str(digits) + "23"
-    #print("my str digits: ", digits)
-
-  # creating a list of RSA blocks
+    
   blocks = [digits[i:i + l] for i in range(0, len(digits), l)]
   print("my block", blocks)
 
   cipher = ""
   for b in blocks:
     # DONE: Initialize 'encrypted_block' so that it contains
-    # the encryption of block 'b' as a string
-    #mod_val = int(b)**int(e)
-    #pow_val = int(b)**int(e)
-    # mod = pow_val%int(n)
 
     encrypted_block  = (int(b)**int(e))%int(n)
-    # print("pow: ",mod_val)
-    # print("mod: ",mod_val%int(n))
-    # print("Result: ",mod_val-(int(n))*mod_val)
-    #print("value: ",value)
-    #encrypted_block = math.fmod(int(b)**int(e),int(n))
-    #print("encryted_block: ",encrypted_block)
 
     if len(str(encrypted_block)) < l:
       # DONE: If the encrypted block contains less digits
-      # than the block size l, prepend the block with enough
-      # 0's so that the numeric value of the block
-      # remains the same, but the new block size is l,
-      # e.g. if l = 4 and encrypted block is '451' then prepend
-      # one 0 to obtain '0451'
       encrypted_block = str(encrypted_block).zfill(l)
-
-
 
     # DONE: Append the encrypted block to the cipher
     cipher += str(encrypted_block)
@@ -201,16 +174,10 @@ def decryptRSA(cipher, p, q, e):
   # each RSA block
   l = util.blocksize(n)
   print("my l: ",l)
-  #print("my n:", n)
   # DONE: Use a Python list comprehension to break the ciphertext
-  # into blocks of equal length 'l'. Initialize 'blocks' so that it
-  # contains these blocks as elements
-  #print("my cipher: ", ciphertext)
   blocks = [ciphertext[value:value+l] for value in range(0,len(ciphertext),l)]
   print("list block: ",blocks)
-  # for i in range(len(ciphertext)):
-  #   blocks += str(ciphertext[i])
-  #print("my block: ",blocks)
+
   print("my e: ",e)
 
   text = ""  # initializing the variable that will hold the decrypted text
@@ -219,7 +186,6 @@ def decryptRSA(cipher, p, q, e):
   mod_val = (p-1)*(q-1)
 
   #e_inv = None
-
   s0, t0 = 1, 0
   s1, t1 = -1 * (mod_val // e), 1
 
@@ -240,21 +206,12 @@ def decryptRSA(cipher, p, q, e):
     bk = ak
     ak = temp % ak
     # ARGGG
-  while s0 < 0:
+  while s0 < 0: 
     s0 += mod_val
   e_inv = s0
 
   print("my mod: ",mod_val)
   print("e_inv: ",e_inv)
-  # print("my n: ",n)
-  # print(blocks[0])
-  # pow = int(blocks[0])**e_inv
-  # print("my pow: ",pow)
-  # result = pow%int(n)
-  # result = str(result).zfill(4)
-  # print("my block0: ",result)
-  # result = util.digits2letters(str(result))
-  # print("my block1: ",result)
 
   for b in blocks:
     # DONE: Use the RSA decryption function to decrypt
