@@ -1,5 +1,6 @@
 import math
 
+
 """ ----------------- PROBLEM 1 ----------------- """
 def translate(S, z0):
   """
@@ -119,3 +120,6 @@ class Vec:
   def __str__(self):
       """returns string representation of this Vec object"""
       return str(self.elements) # does NOT need further implementation
+
+
+  if __name__ == "__main__":

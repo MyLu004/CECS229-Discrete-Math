@@ -1,6 +1,6 @@
 import math
 
-import util
+from PA3 import util
 """ ----------------- PROBLEM 1 ----------------- """
 def affine_encrypt(text, a, b):
   """
@@ -35,10 +35,10 @@ def affine_encrypt(text, a, b):
         #"%02d" % num
         cipher_digits = "%02d" % cipher_digits
 
-      print("ciper_digits: ",cipher_digits)
+      #print("ciper_digits: ",cipher_digits)
 
       cipher += util.digits2letters(str(cipher_digits))
-  print("the secret message is: ", str(cipher))
+  #print("the secret message is: ", str(cipher))
 
   return cipher
 
@@ -59,7 +59,7 @@ def affine_decrypt(ciphertext, a, b):
   else:
     #find a_inv using Euclidean Algorithm
     # DONE: short way [not work on codepose]
-    print("my gcd: ", math.gcd(a,26))
+    #print("my gcd: ", math.gcd(a,26))
     #a_inv = pow(a,-1,26)
     # DONE: Long way | use Euclidean Algorithms
     s0,t0 = 1,0
@@ -84,7 +84,7 @@ def affine_decrypt(ciphertext, a, b):
       #ARGGG
     a_inv = s0
 
-    print("my a_inv: ",a_inv)
+    #print("my a_inv: ",a_inv)
   text = ""
   for letter in ciphertext:
     if letter.isalpha():
