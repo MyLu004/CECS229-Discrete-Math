@@ -51,9 +51,26 @@ def rotate(S, tau):
                 If zero, no rotation.
     :returns: set type; a set consisting of points in S rotated by tau radians
     """
-    # FIXME: Implement this function.
-    # FIXME: Return correct output
-    return None
+
+    new_set = set()
+    for item in S:
+
+        a = item.real
+        b = item.imag
+
+        z = math.sqrt((a) ** 2 + (b) ** 2)
+        theta = (math.atan2(b,a))
+        new_theta = tau + theta
+        trigcos = round(z*math.cos(new_theta),3)
+        trigsin = round(z*math.sin(new_theta),3)
+
+        value = complex(trigcos,trigsin)
+
+        new_set.add(value)
+
+
+    print("my set1:\n", new_set)
+    return new_set
 
 
 """ ----------------- PROBLEM 4 ----------------- """
@@ -141,12 +158,15 @@ if __name__ == "__main__":
 
     myvalue =3-4j
     theta = math.cos(math.atan2(myvalue.imag,myvalue.real))
+    a = -1
+    b = 1
 
+    print("radian value: ", math.atan2(b,a))
     myZ = math.sqrt((myvalue.real)**2 + (myvalue.imag)**2)
     print("myZ: ",myZ)
     print("Theta: ",theta)
-    print("real shit: ", myvalue.real)
-    print("imag: ",myvalue.imag)
+    # print("real shit: ", myvalue.real)
+    # print("imag: ",myvalue.imag)
 
     print(complex(myZ,theta))
 

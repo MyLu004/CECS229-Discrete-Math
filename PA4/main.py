@@ -146,6 +146,7 @@ while True:
             S, 3 + 2j)  # values translated by 3+2i will be plotted in yellow
         sets = [S, T1, T2, T3, T4]
 
+        #print("my sets: ",sets)
         r = int(
             input(
                 "Select the angle to rotate by:\n1. pi/2\n2. -pi/2:\nYour selection: "
