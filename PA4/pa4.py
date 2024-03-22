@@ -139,6 +139,17 @@ if __name__ == "__main__":
         3 + 1j, 3.25 + 1j}
 
 
+    myvalue =3-4j
+    theta = math.cos(math.atan2(myvalue.imag,myvalue.real))
+
+    myZ = math.sqrt((myvalue.real)**2 + (myvalue.imag)**2)
+    print("myZ: ",myZ)
+    print("Theta: ",theta)
+    print("real shit: ", myvalue.real)
+    print("imag: ",myvalue.imag)
+
+    print(complex(myZ,theta))
+
 
 
     # print("testing: ",(2+2j)+(3-2j))
