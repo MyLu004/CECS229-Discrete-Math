@@ -9,9 +9,18 @@ def translate(S, z0):
   :param z0: complex type; a complex number
   :return: set type; a set consisting of points in S translated by z0
   """
-  # FIXME: Implement this function
-  # FIXME: Return correct output
-  return None
+  # DONE: Implement this function
+  # DONE: Return correct output
+
+  print("start working problem 1...")
+  # print("z0: ",z0)
+  mySet = set()
+
+  for item in S:
+      # print("my item: ",item + z0)
+      mySet.add(item+z0)
+
+  return mySet
 
 
 """ ----------------- PROBLEM 2 ----------------- """
@@ -25,7 +34,10 @@ def scale(S, k):
   """
   # FIXME: Implement this function.
   # FIXME: Return correct output
-  return None
+  mySet = set()
+  for item in S:
+      mySet.add(item*k)
+  return mySet
 
 
 """ ----------------- PROBLEM 3 ----------------- """
@@ -122,4 +134,12 @@ class Vec:
       return str(self.elements) # does NOT need further implementation
 
 
-  if __name__ == "__main__":
+if __name__ == "__main__":
+    myset = {2 + 2j, 3 + 2j, 1.75 + 1j, 2 + 1j, 2.25 + 1j, 2.5 + 1j, 2.75 + 1j,
+        3 + 1j, 3.25 + 1j}
+
+
+
+
+    # print("testing: ",(2+2j)+(3-2j))
+
