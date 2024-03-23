@@ -210,7 +210,10 @@ while True:
     elif user_in == '4':
         print("\n" + "-" * 50 + "\n\nTesting Problem 4...\n\n")
         u = pa4.Vec([1, 2, 3])
+        #testing u and v
+        #u = pa4.Vec( [11, 1, 13, -19, 0, -8])
         w = pa4.Vec([0, 1, -1])
+        #v = pa4.Vec([2, 17, 3, -15, 11, 9])
         v = pa4.Vec([0, -3])
 
         print("u = ", u)

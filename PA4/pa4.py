@@ -90,7 +90,12 @@ class Vec:
       """
       # FIXME: Implement this method
       # FIXME: Return correct output
-      return None
+      sum = 0
+      for item in self.elements:
+          sum += item**2
+
+
+      return math.sqrt(sum)
 
   def __add__(self, other):
       """
@@ -98,9 +103,16 @@ class Vec:
       :raises: ValueError if vectors are not same length
       :returns: Vec type; a Vec object that is the sum vector of this Vec and 'other' Vec
       """
-      # FIXME: Finish the implementation
-      # FIXME: Return correct output
-      return None
+
+      if len(self.elements) != len(other.elements):
+          raise ValueError("Vectors must be of the same length for addition")
+
+      myResult = []
+      for item in range(len(self.elements)):
+          print("item: ",item)
+          mySub = self.elements[item] + other.elements[item]
+          myResult.append(mySub)
+      return Vec(myResult)
 
   def __sub__(self, other):
       """
@@ -110,7 +122,15 @@ class Vec:
       """
       # FIXME: Finish the implementation
       # FIXME: Return correct output
-      return None
+      if len(self.elements) != len(other.elements):
+          raise ValueError("Vectors must be of the same length for addition")
+
+      myResult = []
+      for item in range(len(self.elements)):
+          mySum = self.elements[item] - other.elements[item]
+          myResult.append(mySum)
+
+      return Vec(myResult)
 
 
 
@@ -123,15 +143,29 @@ class Vec:
           - Vec * int (component-wise product); returns Vec object
 
       """
+
       if type(other) == Vec: #define dot product
-          # FIXME: Complete the implementation
-          # FIXME: Return the correct output
-          return None
+          # DONE: Complete the implementation
+          # DONE: Return the correct output
+
+          if len(self.elements) != len(other.elements):
+              raise ValueError("Vectors must be of the same length for dot product")
+
+          myResult = 0
+          for item in range(len(self.elements)):
+              mySum = self.elements[item] * other.elements[item]
+              myResult += mySum
+          return myResult
 
       elif type(other) == float or type(other) == int: #scalar-vector multiplication
-          # FIXME: Complete the implementation
-          # FIXME: Return the correct output
-          return None
+          # DONE: Complete the implementation
+          # DONE: Return the correct output
+          myResult = []
+          for item in range(len(self.elements)):
+              print("other: ",other)
+              mySum = self.elements[item] * other
+              myResult.append(mySum)
+          return Vec(myResult)
 
 
   def __rmul__(self, other):
@@ -140,9 +174,9 @@ class Vec:
           - float * Vec; returns Vec object
           - int * Vec; returns Vec object
       """
-      # FIXME: Complete the implementation
-      # FIXME: Return the correct output
-      return None
+      # DONE: Complete the implementation
+      # DONE: Return the correct output
+      return self.__mul__(other)
 
 
 
@@ -151,26 +185,23 @@ class Vec:
       return str(self.elements) # does NOT need further implementation
 
 
-if __name__ == "__main__":
-    myset = {2 + 2j, 3 + 2j, 1.75 + 1j, 2 + 1j, 2.25 + 1j, 2.5 + 1j, 2.75 + 1j,
-        3 + 1j, 3.25 + 1j}
-
-
-    myvalue =3-4j
-    theta = math.cos(math.atan2(myvalue.imag,myvalue.real))
-    a = -1
-    b = 1
-
-    print("radian value: ", math.atan2(b,a))
-    myZ = math.sqrt((myvalue.real)**2 + (myvalue.imag)**2)
-    print("myZ: ",myZ)
-    print("Theta: ",theta)
-    # print("real shit: ", myvalue.real)
-    # print("imag: ",myvalue.imag)
-
-    print(complex(myZ,theta))
-
-
-
+# if __name__ == "__main__":
+#     myset = {2 + 2j, 3 + 2j, 1.75 + 1j, 2 + 1j, 2.25 + 1j, 2.5 + 1j, 2.75 + 1j,
+#         3 + 1j, 3.25 + 1j}
+#
+#
+#     myvalue =3-4j
+#     theta = math.cos(math.atan2(myvalue.imag,myvalue.real))
+#     a = -1
+#     b = 1
+#
+#     print("radian value: ", math.atan2(b,a))
+#     myZ = math.sqrt((myvalue.real)**2 + (myvalue.imag)**2)
+#     print("myZ: ",myZ)
+#     print("Theta: ",theta)
+#     # print("real shit: ", myvalue.real)
+#     # print("imag: ",myvalue.imag)
+#
+#     print(complex(myZ,theta))
     # print("testing: ",(2+2j)+(3-2j))
 
