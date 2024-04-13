@@ -37,18 +37,39 @@ class Matrix:
         return self.cols[j-1]
 
     def get_entry(self,i,j):
-        return self.rows[i][j]
+        return self.rows[i-1][j-1]
 
-    def get_colums(self):
-        return self.rows
+    def get_columns(self):
+        return self.cols
 
     def get_rows(self):
-        return self.cols
+        return self.rows
 
 
     def get_diag(self,k):
+        myList = []
 
+        if k == 0:
+            for i in range(len(self.rows[0]) - k):
+                myList.append(self.rows[i][i])
 
+            return myList
+
+        if k >0:
+            for i in range(len(self.rows[0]) - k):
+                myList.append(self.rows[i][k])
+                k+=1
+
+            return myList
+
+        if k < 0:
+            for i in range(len(self.cols[0]) - abs(k)):
+                myList.append(self.cols[i][abs(k)])
+                k += 1
+
+            print("my reverse list: ",myList)
+
+            return None
     def _construct_cols(self):
         """
         HELPER METHOD: Resets the columns according to the existing rows

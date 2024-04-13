@@ -356,3 +356,5 @@ while True:
   if user_in.upper() == 'Q':
     print("\n" + "-" * 50 + "\n\nGoodbye!")
     break
+
+#https://github.com/github/gitignore
