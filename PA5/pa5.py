@@ -18,30 +18,36 @@ class Matrix:
   INSERT MISSING SETTERS AND GETTERS HERE
   """
 
-    @property
-    def get_row(self):
+    #SETTER METHOD
+    def set_row(self,i, new_row):
+        pass
+
+
+    def set_col(self,j,new_col):
+        pass
+
+    def set_entry(self,i,j,val):
+        pass
+
+    #GET METHOD
+    def get_row(self,i):
+        return self.rows[i-1]
+
+    def get_col(self,j):
+        return self.cols[j-1]
+
+    def get_entry(self,i,j):
+        return self.rows[i][j]
+
+    def get_colums(self):
         return self.rows
-
-    @get_row.setter
-    def set_row(selfs,index):
-        return selfs.rows[index-1]
-
-    def get_col(self,index):
-        return self.cols[index-1]
-
-    #ENTRY SETTER AND GETTER
-    def get_entry(self,m,n):
-        return self.rows[m-1][n-1]
-
 
     def get_rows(self):
-        return self.rows
-
-    def get_columns(self):
         return self.cols
 
-    def get_diag():
-        return None
+
+    def get_diag(self,k):
+
 
     def _construct_cols(self):
         """
