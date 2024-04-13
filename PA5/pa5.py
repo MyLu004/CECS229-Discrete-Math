@@ -2,6 +2,7 @@ from Vec import Vec
 
 """-------------------- PROBLEM 1 --------------------"""
 class Matrix:
+
     def __init__(self, rows):
         """
         initializes a Matrix with given rows
@@ -10,26 +11,77 @@ class Matrix:
         self.rows = rows
         self.cols = []
         self._construct_cols()
+        # self._construct_rows()
         return
 
     """
   INSERT MISSING SETTERS AND GETTERS HERE
   """
 
+    @property
+    def get_row(self):
+        return self.rows
+
+    @get_row.setter
+    def set_row(selfs,index):
+        return selfs.rows[index-1]
+
+    def get_col(self,index):
+        return self.cols[index-1]
+
+    #ENTRY SETTER AND GETTER
+    def get_entry(self,m,n):
+        return self.rows[m-1][n-1]
+
+
+    def get_rows(self):
+        return self.rows
+
+    def get_columns(self):
+        return self.cols
+
+    def get_diag():
+        return None
+
     def _construct_cols(self):
         """
         HELPER METHOD: Resets the columns according to the existing rows
         """
         self.cols = []
-        # FIXME: INSERT YOUR IMPLEMENTATION HERE
-        return
+        # print("my self col: ",self.cols)
+        # print("\n my len list0: ",len(self.rows[0]))
+        # print("\n my len array: ",len(self.rows))
+
+        num_Column = len(self.rows[0])
+        num_Row = len(self.rows)
+
+        for i in range(num_Column):
+            innerList = []
+            for j in range(num_Row):
+                innerList.append(self.rows[j][i])
+            self.cols.append(innerList)
+
+        # DONE: INSERT YOUR IMPLEMENTATION HERE
+
+        #return self._cols
 
     def _construct_rows(self):
         """
         HELPER METHOD: Resets the rows according to the existing columns
         """
+        num_Column = len(self.cols[0])
+        num_Row = len(self.rows)
         self.rows = []
         # FIXME: INSERT YOUR IMPLEMENTATION HERE
+
+        for i in range(num_Row):
+            innerList = []
+            for j in range(num_Column):
+                innerList.append(self.cols[j][i])
+            self.rows.append(innerList)
+
+        print("my row1: ")
+        print(self.rows)
         return
 
     def __add__(self, other):
@@ -143,6 +195,7 @@ class Matrix:
 
 
 """-------------------- PROBLEM 2 --------------------"""
+
 
 def rotate_2Dvec(v: Vec, tau: float):
     """

@@ -76,6 +76,7 @@ while True:
       print("\tTest Failed!")
 
     # getting column
+
     j = randint(1, n)
     print(f"\nTesting matrix.get_col({j})")
     returned_col = matrix.get_col(j)
@@ -122,6 +123,7 @@ while True:
     for d in range(n):
       print(f"\nTesting matrix.get_diag({d})")
       expected_diag = np.diag(expected_rows, k=d)
+      print("my d: ",d)
       returned_diag = matrix.get_diag(d)
       print(f"\tExpected:\n\t{expected_diag}\n\tReturned:\n\t{returned_diag}")
       if np.array_equal(np.array(returned_diag), expected_diag):
