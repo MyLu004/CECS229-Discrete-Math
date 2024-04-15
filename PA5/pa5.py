@@ -1,3 +1,5 @@
+import math
+
 from Vec import Vec
 
 """-------------------- PROBLEM 1 --------------------"""
@@ -107,7 +109,7 @@ class Matrix:
         """
         num_Row = len(self.cols[0])
         self.rows = []
-        # FIXME: INSERT YOUR IMPLEMENTATION HERE
+        # DONE: INSERT YOUR IMPLEMENTATION HERE
 
         for i in range(num_Row):
             innerList = []
@@ -127,7 +129,7 @@ class Matrix:
         :raises: TypeError if other is not of Matrix type
         :return: Matrix type; the Matrix object resulting from the Matrix + Matrix operation
         """
-        pass  # FIXME: REPLACE WITH IMPLEMENTATION
+        #DONE: REPLACE WITH IMPLEMENTATION
         myList = []
         if len(self.rows) == len(other.rows) and len(self.cols) == len(other.cols):
             #implement the function
@@ -148,7 +150,7 @@ class Matrix:
         :raises: TypeError if other is not of Matrix type
         :return: Matrix type; the Matrix object resulting from Matrix - Matrix operation
         """
-        pass  # FIXME: REPLACE WITH IMPLEMENTATION
+          # DONE: REPLACE WITH IMPLEMENTATION
 
         myList = []
         if len(self.rows) == len(other.rows) and len(self.cols) == len(other.cols):
@@ -303,4 +305,9 @@ def rotate_2Dvec(v: Vec, tau: float):
     :param tau: float type; the radians to rotate by
     :return: Vec type; the rotated vector
     """
-    pass  # FIXME: REPLACE WITH IMPLEMENTATION
+    x = v[0]
+    y = v[1]
+    myX_prime = x * math.cos(tau) - y * math.sin(tau)
+    myY_prime = x * math.sin(tau) + y * math.cos(tau)
+
+    return Vec([myX_prime,myY_prime])
