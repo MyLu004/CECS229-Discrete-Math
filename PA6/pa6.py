@@ -1,6 +1,7 @@
 import copy
 from structures import Matrix, Vec
-
+import random
+import numpy as np
 """ ----------------- PROBLEM 1 ----------------- """
 
 
@@ -12,7 +13,12 @@ def norm(v: Vec, p: int):
     :returns: float type; the norm as a float
     """
     # TODO: implement this function
-    pass
+    # print("my Vec: ",v)
+    myResult = 0
+    for i in v:
+        myResult += abs(i)**(p)
+    #and calculate root overall
+    return myResult**(1/p)
 
 
 """ ----------------- PROBLEM 2 ----------------- """
@@ -29,26 +35,19 @@ def _ref(A: Matrix):
     m, n = B.dim()
     k = 1  # initializing the row-index of where to begin searching for the pivot
     for j in range(1, n + 1):
-
         p = _pivot_idx(k, j, B)  # gets the index of the pivot at column j
-
         if p is None:
             continue
-
         if p != k:  # we must swap row k with row p
-            pass  # FIXME: Replace with your code
-
-        pivot = None  # FIXME: replace with the pivot at column j
-        new_row = None  # FIXME: new_row should be row k divided by the pivot
-
+            B.rows[k - 1], B.rows[p - 1] = B.rows[p - 1], B.rows[k - 1]  # swap rows
+        pivot = B.get_entry(k, j)  # pivot at column j
+        new_row = [entry / pivot for entry in B.get_row(k)]  # new row should be row k divided by the pivot
+        print("new row: ", new_row)
         B.set_row(k, new_row)
-
         # reducing the rows below row k by a scalar multiple of row k
         for i in range(k + 1, m + 1):
             scalar = B.get_entry(i, j)
-
-            reduced_row = None  # FIXME: reduced_row should be row i - scalar * row k
-
+            reduced_row = [B.get_entry(i, col) - scalar * B.get_entry(k, col) for col in range(1, n + 1)]
             B.set_row(i, reduced_row)
         k += 1
     return B
@@ -61,9 +60,12 @@ def rank(A: Matrix):
     """
     returns the rank of the given Matrix object
     as an integer
+
+    Apply Gaussian Elimination
     """
-    # TODO: implement this function
-    pass
+    B = Matrix(copy.deepcopy(A.rows))
+    m, n = B.dim()
+    return min(m,n)
 
 
 """ ----------------- PROBLEM 4 ----------------- """
@@ -125,6 +127,14 @@ def _pivot_idx(i: int, j: int, A: Matrix):
     """
     column = A.get_col(j)
     for k in range(i - 1, len(column)):
+        print("column k: ",column[k])
         if column[k] != 0:
             return k + 1
     return None
+
+
+if __name__ == "__main__":
+    matrix1 = Matrix([[2, -1, -10], [2, 0, -4], [-7, 3, 2]])
+    print("matrix: ",matrix1)
+    # expected1 = Matrix([[1.0, -0.5, -5.0], [0.0, 1.0, 6.0], [-0.0, -0.0, 1.0]])
+    _ref(matrix1)

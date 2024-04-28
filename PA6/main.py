@@ -49,8 +49,6 @@ if __name__ == "__main__":
                 print("\nReturned:\n", returned)
                 print("\nExpected:\n", expected)
 
-
-
         elif user_in == '3':
 
             k = randint(3, 5)
