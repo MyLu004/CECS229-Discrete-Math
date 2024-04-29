@@ -2,6 +2,7 @@ import copy
 from structures import Matrix, Vec
 import random
 import numpy as np
+import helpers
 """ ----------------- PROBLEM 1 ----------------- """
 
 
@@ -25,12 +26,6 @@ def norm(v: Vec, p: int):
 
 
 def _ref(A: Matrix):
-    """
-      returns the Row Echelon Form of the Matrix A
-      INPUT: Matrix A
-      OUTPUT: distinct Matrix object that is the
-              Row-Echelon Form of A
-    """
     B = Matrix(copy.deepcopy(A.rows))
     m, n = B.dim()
     k = 1  # initializing the row-index of where to begin searching for the pivot
@@ -48,6 +43,9 @@ def _ref(A: Matrix):
         for i in range(k + 1, m + 1):
             scalar = B.get_entry(i, j)
             reduced_row = [B.get_entry(i, col) - scalar * B.get_entry(k, col) for col in range(1, n + 1)]
+            # Ensure that elements below the pivot are set to zero if they are very close to zero
+            reduced_row = [0.0 if abs(entry) < 1e-10 else entry for entry in reduced_row]
+            print("reduced row: ", reduced_row)  # Print the reduced row for debugging
             B.set_row(i, reduced_row)
         k += 1
     return B
@@ -63,9 +61,51 @@ def rank(A: Matrix):
 
     Apply Gaussian Elimination
     """
-    B = Matrix(copy.deepcopy(A.rows))
-    m, n = B.dim()
-    return min(m,n)
+    # B = Matrix(copy.deepcopy(A.rows))
+    # m, n = B.dim()
+    # return min(m,n)
+
+    temp_matrix = _ref(A)
+    ref_matrix = []
+    row_num = 0
+    num_rows = len(A.rows)
+
+    while row_num < num_rows:
+        curr_row = temp_matrix.get_row(row_num)
+        ref_list = []
+
+        for j in range(len(curr_row)):
+            ref_list.append(curr_row[j])
+
+        row_num += 1
+        ref_matrix.append(ref_list)
+
+    for i in range(len(ref_matrix)):
+        for j in range(len(ref_matrix[i])):
+            ref_matrix[i][j] = round(ref_matrix[i][j], 2)
+
+    rank_counter = 0
+
+    for i in range(len(ref_matrix)):
+        non_zero_counter = 0
+        for j in range(len(ref_matrix[0])):
+
+            if j == len(ref_matrix[0]) - 1:  # check if last index is 0
+                # print("last index:", ref_matrix[i][j])
+                if ref_matrix[i][j] == 0 and non_zero_counter <= 1:
+                    # print("this is not counted in rank")
+                    non_zero_counter = 0  # set variable back to 0 to mark as linearly dependent
+                elif ref_matrix[i][j] != 0:
+                    non_zero_counter += 1
+
+            elif ref_matrix[i][j] != 0:
+                non_zero_counter += 1
+
+        if non_zero_counter > 0:
+            rank_counter += 1
+
+    return rank_counter
+
 
 
 """ ----------------- PROBLEM 4 ----------------- """
@@ -85,12 +125,74 @@ def gauss_solve(A: Matrix, b: Vec):
     Arank = rank(A)
     Agrank = rank(Ag)
     m, n = A.dim()
-    if Arank != Agrank:
-        pass  # FIXME: Replace with your implementation
-    elif Arank < n:
-        pass  # FIXME: Replace with your implementation
-    else:
-        pass  # FIXME: Replace with your implementation
+
+    if Arank != Agrank:  # No Solution
+        return None
+    elif Arank < n:  # Infinite Solutions
+        num_free_variables = A.dim()[1] - Arank
+        return num_free_variables
+    else:  # Unique Solution
+        # solve for unique solution
+        len_matrix = len(A.rows)
+        len_vec = len(b.elements)
+
+        if len_matrix != len_vec:
+            raise ValueError("dimensions do not match")
+        else:
+            # obtain rank of ref of matrix and ag matrix
+            rank_ref_a = rank(A)
+
+            # rank ag matrix
+            ag_matrix = []
+            for i in range(len_matrix):
+                row_list = []
+                for j in range(len(A.cols) + 1):
+                    row_list.append(0)
+                ag_matrix.append(row_list)
+
+            temp_matrix = []
+            for i in range(len(A.rows)):
+                row_list = []
+                for j in range(len(A.cols)):
+                    row_list.append(A.rows[i][j])
+                temp_matrix.append(row_list)
+
+            vec_list = []
+            for num in b.elements:
+                vec_list.append(num)
+
+            for i in range(len_matrix):
+                for j in range(len(A.cols)):
+                    ag_matrix[i][j] = temp_matrix[i][j]
+
+            for i in range(len(vec_list)):
+                ag_matrix[i][len(ag_matrix[0]) - 1] = vec_list[i]
+
+            #ref_ag = Matrix(ag_matrix).ref()
+            ref_ag = _ref(Matrix(ag_matrix))
+            rank_ag = rank(ref_ag)
+
+            if rank_ref_a == rank_ag:
+                num_variables = len(temp_matrix[0])
+
+                if rank_ag < num_variables:
+                    return Arank - Agrank
+                elif rank_ag == num_variables:
+                    solution = []
+                    for i in range(num_variables - 1, -1, -1):
+                        if i == num_variables - 1:
+                            x_i = ref_ag.rows[i][num_variables] / ref_ag.rows[i][i]
+                        else:
+                            sum_total = 0
+                            for j in range(i + 1, num_variables):
+                                sum_total += ref_ag.rows[i][j] * solution[num_variables - 1 - j]
+                            x_i = (ref_ag.rows[i][num_variables] - sum_total) / ref_ag.rows[i][i]
+                        solution.append(x_i)
+
+                    solution.reverse()
+                    return Vec([round(x,10) for x in solution])
+
+
 
 
 """ ----------------- PROBLEM 5 ----------------- """
@@ -108,7 +210,30 @@ def gram_schmidt(S: set):
               - Vec type; the vector solution of the system if it has a unique solution
     """
     # TODO: Implement this function
-    pass
+    result = helpers.is_independent(S)
+    if not result:
+        raise ValueError("The input vectors are not linearly independent.")
+
+    # Initialize a list to store the orthogonalized vectors
+    orthogonalized = []
+
+    # Copy the input vectors into a temporary list of lists
+    temp_vec_list = [v.elements[:] for v in S]
+
+    # Perform Gram-Schmidt process
+    for i in range(len(temp_vec_list)):
+        for j in range(i):
+            temp_vec_list[i] = projection(temp_vec_list[j], temp_vec_list[i])
+
+    # Normalize the orthogonalized vectors and store them in orthogonalized list
+    for k in range(len(temp_vec_list)):
+        denominator = sum(x ** 2 for x in temp_vec_list[k]) ** 0.5
+        factor = 1 / denominator if denominator != 0 else 0
+        temp_vec_list[k] = [x * factor for x in temp_vec_list[k]]
+        orthogonalized.append(Vec(temp_vec_list[k]))
+
+    return orthogonalized
+
 
 
 """ HELPER METHOD"""
@@ -131,6 +256,14 @@ def _pivot_idx(i: int, j: int, A: Matrix):
         if column[k] != 0:
             return k + 1
     return None
+
+def projection(w_vector, x_vector):
+    # len_vector = len(w_vector)
+    numerator = sum(w * x for w, x in zip(w_vector, x_vector))
+    denominator = sum(w ** 2 for w in w_vector)
+    factor = numerator / denominator if denominator != 0 else 0
+    temp_w_vector = [w * factor for w in w_vector]
+    return [x - w for x, w in zip(x_vector, temp_w_vector)]
 
 
 if __name__ == "__main__":
