@@ -28,7 +28,7 @@ if __name__ == '__main__':
       print('b: ', b)
       print('Expected:', x_expected)
       try:
-        x_returned = pa7.qr_solve(A, b)
+        x_returned = pa7.qr_solve(A, b)  
         print('Returned:', x_returned)
         if norm(x_expected - x_returned, 2) < 1e-7:
           print("Test passed!")
